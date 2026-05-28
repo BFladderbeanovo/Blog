@@ -2,29 +2,87 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="关于我" description="关于本博客作者">
-	<main>
-		<h1>关于我</h1>
-		<p>HiHi这里是BFladderbean，你可以叫我BF！</p>
-		
-		<h2>我是谁？</h2>
-		<p>我是一位前端开发者&&一位已经AFOed的OIer，目前正在绝赞学习机器学习/深度学习。关于学习嘛……我是一个国际生，所以学的东西比较自由，可能会涉及很多不同领域。</p>
-		<p>游戏方面我主要摸音游和一些策略类游戏（神秘打灰男（划掉））。而且由于是解构向玩家，我可能会扔一些游戏的代码片段。我会遵循EULA的！</p>
+<Layout title="About" description="About the author and this archive">
+  <main class="page-shell about-page">
+    <section class="about-hero editorial-frame">
+      <div>
+        <span class="axis-label">About / identity note</span>
+        <h1>Hi, I am BF.</h1>
+      </div>
+      <p>
+        I write as BFladderbean: a front-end developer, learner, and curious systems tinkerer. This archive collects notes about web development, mathematics, machine learning, philosophy, games, and anything else that asks for a place to land.
+      </p>
+    </section>
 
-		<h2>为什么写这个博客？</h2>
-		<p>在这里我也许会随机扔一些游戏特性分析 or 代码模板 or 学习笔记。</p>
-	</main>
+    <section class="about-grid">
+      <article>
+        <span class="axis-label">01 / workbench</span>
+        <h2>What I make</h2>
+        <p>I build web interfaces, study technical systems, and document the patterns I want future-me to find again.</p>
+      </article>
+      <article>
+        <span class="axis-label">02 / play</span>
+        <h2>What I notice</h2>
+        <p>Games, tools, diagrams, proofs, interaction details, and the strange emotional weather of learning hard things.</p>
+      </article>
+      <article>
+        <span class="axis-label">03 / why this exists</span>
+        <h2>Why the blog</h2>
+        <p>Because thinking becomes more useful when it has a shape: tags, routes, fragments, and enough friction to become memorable.</p>
+      </article>
+    </section>
+  </main>
 </Layout>
 
 <style>
-	main {
-		width: 720px;
-		max-width: calc(100% - 2em);
-		margin: auto;
-		padding: 1em;
-	}
-	h1 {
-		font-size: 2.5em;
-		color: rgb(var(--black));
-	}
+  .about-page {
+    display: grid;
+    gap: var(--space-3xl);
+  }
+
+  .about-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(18rem, 0.7fr);
+    gap: var(--space-xl);
+    padding: clamp(1.2rem, 4vw, 3rem);
+    background:
+      linear-gradient(90deg, transparent 0 58%, var(--accent-pink) 58% 72%, transparent 72%),
+      var(--surface);
+  }
+
+  .about-hero h1 {
+    margin-top: var(--space-xl);
+    font-size: var(--text-3xl);
+  }
+
+  .about-hero p {
+    align-self: end;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .about-grid article {
+    min-height: 17rem;
+    padding: var(--space-lg);
+    border: var(--frame) solid var(--border);
+    background: var(--surface);
+    display: grid;
+    align-content: space-between;
+  }
+
+  .about-grid h2 {
+    font-size: clamp(1.8rem, 4vw, 3.6rem);
+  }
+
+  @media (max-width: 900px) {
+    .about-hero,
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 </style>

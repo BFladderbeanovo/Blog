@@ -2,40 +2,66 @@
 import { Image } from 'astro:assets';
 import avatar from '../assets/avatar.png';
 ---
+
 <div class="author-bio">
-    <div class="avatar">
-        <Image src={avatar} alt="BF" />
-    </div>
-    <div class="bio-content">
-        <h3>关于作者</h3>
-        <p>这里是BF! </p>
-        <a href="/about">了解更多 &rarr;</a>
-    </div>
+  <div class="avatar">
+    <Image src={avatar} alt="BF" />
+  </div>
+  <div class="bio-content">
+    <span class="axis-label">Author note</span>
+    <h3>BFladderbean</h3>
+    <p>Front-end developer, learner, and collector of technical field notes.</p>
+    <a href="/about">Read the identity note</a>
+  </div>
 </div>
+
 <style>
+  .author-bio {
+    display: grid;
+    grid-template-columns: 6rem minmax(0, 1fr);
+    gap: var(--space-lg);
+    align-items: center;
+    margin-top: var(--space-2xl);
+    padding: var(--space-lg);
+    border: var(--frame) solid var(--border);
+    background: var(--surface);
+  }
+
+  .avatar {
+    border: 1px solid var(--border);
+    overflow: hidden;
+    background: var(--accent-lemon);
+  }
+
+  .avatar img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.1);
+  }
+
+  .bio-content h3 {
+    margin: 0.4rem 0;
+    font-size: clamp(1.5rem, 4vw, 2.6rem);
+  }
+
+  .bio-content a {
+    display: inline-flex;
+    margin-top: 0.6rem;
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 560px) {
     .author-bio {
-        margin-top: 3em;
-        padding: 1.5em;
-        border: 1px solid rgb(var(--gray-light));
-        background: rgb(var(--gray-light), 0.1);
-        display: flex;
-        gap: 1em;
-        align-items: center;
-        border-radius: 8px;
+      grid-template-columns: 1fr;
     }
-    .avatar img {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%; /* Optional: Keep round for people */
+
+    .avatar {
+      width: 6rem;
     }
-    .bio-content h3 {
-        margin: 0 0 0.5em 0;
-        color: var(--heading-color);
-    }
-    .bio-content p {
-        margin: 0 0 0.5em 0;
-        font-size: 0.9em;
-        color: var(--text-color);
-        opacity: 0.9;
-    }
+  }
 </style>

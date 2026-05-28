@@ -3,101 +3,94 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Search" description="Search the blog">
-	<main>
-		<h1>Search</h1>
-		<div class="search-container">
-			<input type="text" id="search-input" placeholder="Type to search..." autofocus />
-			<ul id="search-results"></ul>
-		</div>
-	</main>
+  <main class="narrow-shell search-page">
+    <span class="axis-label">Search / live index</span>
+    <h1>Search the archive</h1>
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Type at least two characters..." autofocus />
+      <ul id="search-results"></ul>
+    </div>
+  </main>
 </Layout>
 
 <script>
-    // Client-side search logic
-    const searchInput = document.getElementById('search-input');
-    const searchResults = document.getElementById('search-results');
+  const searchInput = document.getElementById('search-input');
+  const searchResults = document.getElementById('search-results');
+  let posts = [];
 
-    let posts = [];
-
-    // Fetch posts index
-    fetch('/search.json')
-        .then(res => res.json())
-        .then(data => {
-            posts = data;
-        });
-
-    searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase();
-        if (query.length < 2) {
-            searchResults.innerHTML = '';
-            return;
-        }
-
-        const filtered = posts.filter(post => 
-            post.title.toLowerCase().includes(query) || 
-            post.description.toLowerCase().includes(query) ||
-            (post.tags && post.tags.some(tag => tag.toLowerCase().includes(query)))
-        );
-
-        searchResults.innerHTML = filtered.map(post => `
-            <li>
-                <a href="/blog/${post.slug}">
-                    <h3>${post.title}</h3>
-                    <p>${post.description}</p>
-                </a>
-            </li>
-        `).join('');
+  fetch('/search.json')
+    .then((res) => res.json())
+    .then((data) => {
+      posts = data;
     });
+
+  searchInput?.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    if (query.length < 2) {
+      searchResults.innerHTML = '';
+      return;
+    }
+
+    const filtered = posts.filter((post) =>
+      post.title.toLowerCase().includes(query) ||
+      post.description.toLowerCase().includes(query) ||
+      (post.tags && post.tags.some((tag) => tag.toLowerCase().includes(query)))
+    );
+
+    searchResults.innerHTML = filtered.map((post) => `
+      <li>
+        <a href="/blog/${post.slug}">
+          <h3>${post.title}</h3>
+          <p>${post.description}</p>
+        </a>
+      </li>
+    `).join('');
+  });
 </script>
 
 <style>
-	main {
-		width: 720px;
-		max-width: calc(100% - 2em);
-		margin: auto;
-		padding: 1em;
-	}
-    h1 {
-        margin-bottom: 1em;
-    }
-    input {
-        width: 100%;
-        padding: 1em;
-        font-size: 1.2em;
-        background: #fff;
-        border: 1px solid rgb(var(--gray-light));
-        color: rgb(var(--gray-dark));
-        margin-bottom: 2em;
-        outline: none;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    }
-    input:focus {
-        border-color: rgb(var(--accent));
-    }
-    ul {
-        list-style: none;
-        padding: 0;
-    }
-    li {
-        margin-bottom: 1em;
-        border-bottom: 1px solid rgb(var(--gray-light));
-        padding-bottom: 1em;
-    }
-    a {
-        display: block;
-        text-decoration: none;
-        color: inherit;
-    }
-    a:hover h3 {
-        color: rgb(var(--accent));
-    }
-    h3 {
-        margin: 0 0 0.5em 0;
-        color: rgb(var(--black));
-    }
-    p {
-        margin: 0;
-        color: rgb(var(--gray));
-    }
+  .search-page h1 {
+    margin: var(--space-lg) 0 var(--space-xl);
+    font-size: var(--text-3xl);
+  }
+
+  input {
+    width: 100%;
+    padding: 1rem;
+    border: var(--frame) solid var(--border);
+    border-radius: 0;
+    background: var(--surface);
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    outline: none;
+  }
+
+  input:focus {
+    background: var(--accent-lemon);
+    color: #111;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-top: var(--space-xl);
+    border-top: 1px solid var(--border);
+  }
+
+  li a {
+    display: block;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-size: clamp(1.4rem, 3vw, 2.4rem);
+  }
+
+  p {
+    margin-top: 0.35rem;
+  }
 </style>

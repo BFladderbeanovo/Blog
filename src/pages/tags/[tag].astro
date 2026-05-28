@@ -1,18 +1,17 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import PostCard from '../../components/PostCard.astro';
+import BlogNav from '../../components/BlogNav.astro';
 import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-	const allPosts = await getCollection('blog');
-	const uniqueTags = [...new Set(allPosts.map((post) => post.data.tags).flat().filter(Boolean))];
+  const allPosts = await getCollection('blog');
+  const uniqueTags = [...new Set(allPosts.map((post) => post.data.tags).flat().filter(Boolean))];
 
-	return uniqueTags.map((tag) => {
-		const filteredPosts = allPosts.filter((post) => post.data.tags?.includes(tag));
-		return {
-			params: { tag },
-			props: { posts: filteredPosts },
-		};
-	});
+  return uniqueTags.map((tag) => {
+    const filteredPosts = allPosts.filter((post) => post.data.tags?.includes(tag));
+    return { params: { tag }, props: { posts: filteredPosts } };
+  });
 }
 
 const { tag } = Astro.params;
@@ -20,43 +19,24 @@ const { posts } = Astro.props;
 ---
 
 <Layout title={`Tag: ${tag}`}>
-	<main>
-		<h1>Tag: <span>#{tag}</span></h1>
-		<ul>
-			{posts.map((post) => (
-				<li>
-					<a href={`/blog/${post.slug}/`}>{post.data.title}</a>
-				</li>
-			))}
-		</ul>
-	</main>
+  <main class="page-shell">
+    <BlogNav tags={[tag]} />
+    <a class="back-link" href={`/tags?tags=${tag}`}>Open tag explorer</a>
+    <h1 class="page-title">#{tag}</h1>
+    <div class="post-grid">
+      {posts.map((post) => <PostCard post={post} highlightTags={[tag]} />)}
+    </div>
+  </main>
 </Layout>
 
 <style>
-	main {
-		width: 720px;
-		max-width: calc(100% - 2em);
-		margin: auto;
-		padding: 1em;
-	}
-    h1 {
-        color: rgb(var(--black));
-    }
-    span {
-        color: rgb(var(--accent));
-    }
-    ul {
-        list-style: none;
-        padding: 0;
-    }
-    li a {
-        display: block;
-        padding: 0.5em 0;
-        font-size: 1.2em;
-        color: rgb(var(--gray-dark));
-        text-decoration: none;
-    }
-    li a:hover {
-        color: rgb(var(--accent));
-    }
+  .back-link {
+    display: inline-flex;
+    margin-bottom: var(--space-md);
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
 </style>
