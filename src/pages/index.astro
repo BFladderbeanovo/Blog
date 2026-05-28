@@ -5,266 +5,195 @@ import VisitorWidgets from '../components/VisitorWidgets.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 const latestPosts = posts.slice(0, 3);
 ---
 
 <Layout>
-	<main>
-        
-        <!-- 1. Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>你好，我是 <span class="text-gradient">BFladderbean</span></h1>
-                <p class="slogan">不写在纸上也没有关系，书于手掌之上亦无妨，因为故事所需要的，仅仅只有悲剧和泪水而已。</p>
-            </div>
-        </section>
+  <main class="home-page page-shell">
+    <section class="hero-panel editorial-frame">
+      <div class="hero-copy">
+        <span class="axis-label">Personal archive / 00-Home</span>
+        <h1>Notes for things that refuse to stay tidy.</h1>
+        <p>
+          A digital garden for code, mathematics, philosophy, stray tools, and the little systems that make thinking easier to revisit.
+        </p>
+      </div>
+      <div class="hero-card">
+        <span class="card-kicker">Current Mode</span>
+        <strong>Field Notes</strong>
+        <p>Drafted in public, revised in motion, indexed for future wandering.</p>
+      </div>
+    </section>
 
-        <!-- 2. Recent Articles -->
-        <section class="featured-posts">
-            <div class="section-header">
-                <h2>最新文章</h2>
-                <a href="/blog" class="view-all-link">
-                    <span class="link-text">查看全部文章</span>
-                    <span class="link-arrow">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                            <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="square"/>
-                        </svg>
-                    </span>
-                </a>
-            </div>
-            
-            <div class="posts-list">
-                {latestPosts.map((post) => (
-                    <PostCard post={post} />
-                ))}
-            </div>
-        </section>
+    <section class="latest-section">
+      <div class="section-rail">
+        <span class="rail-node"></span>
+        <span class="axis-label">Latest dispatches</span>
+      </div>
+      <div class="post-grid">
+        {latestPosts.map((post) => <PostCard post={post} />)}
+      </div>
+    </section>
 
-        <!-- 3. Start Here CTA -->
-        <section class="start-here-cta">
-            <div class="cta-card">
-                <div class="cta-text">
-                    <h2>第一次来？</h2>
-                    <p>不知道从哪里看起？这里有一份阅读指南，带你快速了解这里的一切。</p>
-                </div>
-                <div class="cta-action">
-                    <a href="/start-here" class="btn-primary">阅读指南</a>
-                </div>
-            </div>
-        </section>
+    <section class="route-section">
+      <a href="/start-here" class="route-card accent-band">
+        <span class="axis-label">First visit</span>
+        <strong>Start with the map</strong>
+        <span>Reading guide</span>
+      </a>
+      <a href="/blog" class="route-card">
+        <span class="axis-label">Archive</span>
+        <strong>Open all records</strong>
+        <span>Browse posts</span>
+      </a>
+    </section>
 
-        <!-- 4. Visitor Stats -->
-        <section class="stats-section">
-            <VisitorWidgets />
-        </section>
-
-	</main>
+    <section class="stats-section">
+      <div class="section-rail">
+        <span class="rail-node"></span>
+        <span class="axis-label">Visitor telemetry</span>
+      </div>
+      <VisitorWidgets />
+    </section>
+  </main>
 </Layout>
 
 <style>
-	main {
-		margin: 0 auto;
-		width: 100%;
-        max-width: 960px;
-        padding: 0 1rem;
-	}
+  .home-page {
+    display: grid;
+    gap: var(--space-3xl);
+  }
 
-    /* Hero Section */
-    .hero {
-        padding: 4rem 0 3rem 0;
-        text-align: left;
-    }
-    .hero h1 {
-        font-size: 3.5rem;
-        font-weight: 800;
-        margin-bottom: 0.5rem;
-        line-height: 1.1;
-        letter-spacing: -0.02em;
-        color: var(--heading-color);
-    }
-    .text-gradient {
-        color: rgb(var(--accent));
-    }
-    .slogan {
-        font-size: 1.4rem;
-        color: var(--text-color);
-        opacity: 0.8;
-        font-weight: 400;
-        max-width: 600px;
-    }
+  .hero-panel {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 28rem);
+    min-height: min(620px, 72vh);
+    padding: clamp(1rem, 4vw, 3rem);
+    background:
+      linear-gradient(90deg, transparent 0 62%, var(--accent-lemon) 62% 75%, transparent 75%),
+      var(--surface);
+  }
 
-    /* Section Headers */
-    .section-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        margin-bottom: 2rem;
-        border-bottom: 2px solid rgba(0,0,0,0.05);
-        padding-bottom: 0.5rem;
-    }
-    .section-header h2 {
-        font-size: 1.8rem;
-        margin: 0;
-        color: var(--heading-color);
-        font-weight: 700;
-        letter-spacing: -0.02em;
-    }
-    
-    /* Modern View All Link */
-    .view-all-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: var(--gray);
-        text-decoration: none;
-        position: relative;
-        padding-bottom: 2px;
-        transition: color 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
+  .hero-panel::after {
+    content: "BF";
+    position: absolute;
+    right: 0.5rem;
+    bottom: -0.2rem;
+    color: var(--text-ghost);
+    font-family: var(--font-display);
+    font-size: clamp(9rem, 28vw, 28rem);
+    font-weight: 900;
+    line-height: 0.72;
+    letter-spacing: -0.09em;
+    pointer-events: none;
+  }
 
-    .view-all-link::after {
-        content: '';
-        position: absolute;
-        bottom: -2px; /* Place below the text */
-        left: 0;
-        width: 100%;
-        height: 1px;
-        background: currentColor;
-        transform: scaleX(0);
-        transform-origin: right;
-        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
+  .hero-copy {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    align-content: space-between;
+    gap: var(--space-xl);
+  }
 
-    .view-all-link:hover {
-        color: rgb(var(--heading-color)); /* Darken on hover instead of accent for high-end feel, or use accent */
-    }
-    
-    .view-all-link:hover::after {
-        transform: scaleX(1);
-        transform-origin: left;
-    }
-    
-    .link-arrow {
-        display: inline-flex;
-        align-items: center;
-        transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-    
-    .view-all-link:hover .link-arrow {
-        transform: translateX(4px);
-    }
+  .hero-copy h1 {
+    max-width: 11ch;
+    font-size: var(--text-4xl);
+  }
 
-    /* Posts List */
-    .posts-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        margin-bottom: 4rem;
-    }
+  .hero-copy p {
+    max-width: 42rem;
+    font-size: clamp(1rem, 2vw, 1.45rem);
+    line-height: 1.35;
+  }
 
-    /* CTA Section */
-    .start-here-cta {
-        margin-bottom: 4rem;
-    }
-    .cta-card {
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius);
-        padding: 2.5rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 2rem;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-    }
-    .cta-text h2 {
-        margin-top: 0;
-        font-size: 1.6rem;
-        color: var(--heading-color);
-    }
-    .cta-text p {
-        margin: 0;
-        font-size: 1.1rem;
-        color: var(--gray);
-    }
-    .btn-primary {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background-color: rgb(var(--accent));
-        color: #fff;
-        padding: 0.8rem 2rem;
-        border-radius: 0;
-        font-weight: 600;
-        text-decoration: none;
-        letter-spacing: 0.05em;
-        position: relative;
-        overflow: hidden;
-        transition: padding 0.3s ease; /* subtle movement */
-        z-index: 1;
-        /* Initial state compatible with non-hover */
-        box-shadow: 0 0 0 transparent;
+  .hero-card {
+    position: relative;
+    z-index: 1;
+    align-self: end;
+    padding: var(--space-lg);
+    border: 1px solid var(--border);
+    background: var(--accent-sky);
+    transform: rotate(-2deg);
+  }
+
+  .card-kicker {
+    color: #111;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .hero-card strong {
+    display: block;
+    margin: 0.8rem 0;
+    color: #111;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    text-transform: uppercase;
+  }
+
+  .hero-card p {
+    color: #111;
+  }
+
+  .route-section {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .route-card {
+    min-height: 14rem;
+    padding: var(--space-lg);
+    border: var(--frame) solid var(--border);
+    background: var(--surface);
+    display: grid;
+    align-content: space-between;
+  }
+
+  .route-card:hover {
+    transform: translate(-0.2rem, -0.2rem);
+  }
+
+  .route-card strong {
+    max-width: 10ch;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 7vw, 5rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    text-transform: uppercase;
+  }
+
+  .route-card span:last-child {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .accent-band .axis-label,
+  .accent-band span,
+  .accent-band strong {
+    color: #fffef8;
+  }
+
+  @media (max-width: 900px) {
+    .hero-panel,
+    .route-section {
+      grid-template-columns: 1fr;
     }
 
-    .btn-primary::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
-        transform: translateX(-100%);
-        transition: 0.6s;
-        z-index: -1;
+    .hero-panel {
+      min-height: auto;
     }
-
-    .btn-primary:hover {
-        /* Premium colored shadow, no black */
-        box-shadow: 0 10px 25px -10px rgba(var(--accent), 0.6);
-        transform: translateY(-2px);
-        color: #fff;
-    }
-
-    .btn-primary:hover::before {
-        transform: translateX(100%);
-    }
-
-    /* Add a subtle scale/smoother transition logic on the element itself */
-    .btn-primary {
-        transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
-                    box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-
-    /* Stats Section */
-    .stats-section {
-        margin-bottom: 4rem;
-    }
-
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
-        .hero h1 {
-            font-size: 2.5rem;
-        }
-        .slogan {
-            font-size: 1.1rem;
-        }
-        .cta-card {
-            flex-direction: column;
-            text-align: center;
-            align-items: stretch;
-        }
-        .cta-action {
-            margin-top: 1rem;
-        }
-    }
-    
-    /* Dark Mode Adjustments */
-    :global(html[data-theme='nord']) .section-header {
-        border-bottom-color: rgba(255,255,255,0.1);
-    }
+  }
 </style>

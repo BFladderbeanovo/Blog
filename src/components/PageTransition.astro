@@ -121,12 +121,12 @@
     }
 
     .layer-accent {
-        background-color: rgb(var(--accent)); /* Uses theme accent */
+        background-color: rgb(var(--accent));
         z-index: 1;
     }
     
     .layer-primary {
-        background-color: var(--black); /* Default Day Mode Black */
+        background-color: rgb(var(--black));
         z-index: 2;
     }
 
@@ -250,7 +250,7 @@
 
     /* TEXT ANIMATION */
     .loader-text {
-        font-family: var(--font-heading, sans-serif);
+        font-family: var(--font-display, sans-serif);
         font-size: 4rem;
         font-weight: 900;
         font-style: italic;
@@ -270,17 +270,17 @@
     /* Force specific colors for layers */
     
     /* Modern Day: White Primary, Red Accent, Black Text */
-    :global(html[data-theme='modern']) .layer-primary { background-color: #ffffff; }
-    :global(html[data-theme='modern']) .layer-accent { background-color: rgb(220, 50, 47); }
+    :global(html[data-theme='modern']) .layer-primary { background-color: var(--surface); }
+    :global(html[data-theme='modern']) .layer-accent { background-color: rgb(var(--accent)); }
     :global(html[data-theme='modern']) .loader-text { 
         color: #000000; 
         mix-blend-mode: normal; 
     }
     
     /* Nord Night: Dark Primary, Cyan Accent */
-    :global(html[data-theme='nord']) .layer-primary { background-color: #2e3440; }
-    :global(html[data-theme='nord']) .layer-accent { background-color: #88c0d0; }
-    :global(html[data-theme='nord']) .loader-text { color: #eceff4; } /* White text for dark bg */
+    :global(html[data-theme='nord']) .layer-primary { background-color: var(--surface); }
+    :global(html[data-theme='nord']) .layer-accent { background-color: rgb(var(--accent)); }
+    :global(html[data-theme='nord']) .loader-text { color: var(--text-primary); }
 
     /* Global Transitions Disable */
     :global(html.is-navigating::view-transition-group(root)) { animation: none !important; }
