@@ -1,5 +1,5 @@
 ---
-const today = new Date();
+const bryanToday = new Date();
 ---
 
 <footer class="site-footer">
@@ -15,14 +15,14 @@ const today = new Date();
       <div class="social-links">
         <a href="https://github.com/BFladderbeanawa" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
           <span class="sr-only">GitHub</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.44 5.44 0 0 0 3.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0-2-1.5-3-1.5-3-1.5-.3 1.15-.3 2.35 0 3.5-.73 1.02-1.08 2.25-1 3.5 0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
         </a>
         <a href="https://space.bilibili.com/499560971" target="_blank" rel="noopener noreferrer" aria-label="Bilibili">
           <span class="sr-only">Bilibili</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><rect x="2" y="7" width="20" height="15"></rect><path d="m17 2-5 5-5-5"></path></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
         </a>
       </div>
-      <p class="copyright">&copy; {today.getFullYear()} BFladderbean. <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">MIT License</a>.</p>
+      <p class="copyright">&copy; {bryanToday.getFullYear()} BFladderbean. <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">MIT License</a>.</p>
     </div>
 
     <button id="status-trigger" class="status-trigger" aria-label="Show status">
@@ -240,42 +240,42 @@ const today = new Date();
 
 <script>
   document.addEventListener('astro:page-load', () => {
-    const trigger = document.getElementById('status-trigger');
-    const drawer = document.getElementById('status-drawer');
-    const overlay = document.getElementById('status-overlay');
-    const closeBtn = document.getElementById('close-drawer');
+    const bryanTrigger = document.getElementById('status-trigger');
+    const bryanDrawer = document.getElementById('status-drawer');
+    const bryanOverlay = document.getElementById('status-overlay');
+    const bryanCloseBtn = document.getElementById('close-drawer');
 
-    function openDrawer() {
-      drawer?.classList.add('active');
-      overlay?.classList.add('active');
+    function bryanOpenDrawer() {
+      bryanDrawer?.classList.add('active');
+      bryanOverlay?.classList.add('active');
     }
 
-    function closeDrawerAction() {
-      drawer?.classList.remove('active');
-      overlay?.classList.remove('active');
+    function bryanCloseDrawerAction() {
+      bryanDrawer?.classList.remove('active');
+      bryanOverlay?.classList.remove('active');
     }
 
-    trigger?.addEventListener('click', openDrawer);
-    closeBtn?.addEventListener('click', closeDrawerAction);
-    overlay?.addEventListener('click', closeDrawerAction);
+    bryanTrigger?.addEventListener('click', bryanOpenDrawer);
+    bryanCloseBtn?.addEventListener('click', bryanCloseDrawerAction);
+    bryanOverlay?.addEventListener('click', bryanCloseDrawerAction);
 
     fetch('https://status-api.fannbryan.workers.dev/')
-      .then((response) => response.json())
-      .then((data) => {
-        const appEl = document.getElementById('status-app');
-        if (!appEl) return;
+      .then((bryanResponse) => bryanResponse.json())
+      .then((bryanData) => {
+        const bryanAppEl = document.getElementById('status-app');
+        if (!bryanAppEl) return;
 
-        appEl.textContent = data.app || 'Online';
-        const battery = data['battery '] || data.battery || '--';
-        document.getElementById('status-battery').textContent = String(battery).trim() + '%';
-        const isConnected = data.wifi && data.wifi !== 'Not Connected';
-        document.getElementById('status-wifi').textContent = isConnected ? 'Connected' : 'Offline';
-        document.getElementById('status-city').textContent = data.city || '--';
-        document.getElementById('status-model').textContent = data.model || '--';
+        bryanAppEl.textContent = bryanData.app || 'Online';
+        const bryanBattery = bryanData['battery '] || bryanData.battery || '--';
+        document.getElementById('status-battery').textContent = String(bryanBattery).trim() + '%';
+        const bryanIsConnected = bryanData.wifi && bryanData.wifi !== 'Not Connected';
+        document.getElementById('status-wifi').textContent = bryanIsConnected ? 'Connected' : 'Offline';
+        document.getElementById('status-city').textContent = bryanData.city || '--';
+        document.getElementById('status-model').textContent = bryanData.model || '--';
       })
       .catch(() => {
-        const appEl = document.getElementById('status-app');
-        if (appEl) appEl.textContent = 'Offline';
+        const bryanAppEl = document.getElementById('status-app');
+        if (bryanAppEl) bryanAppEl.textContent = 'Offline';
       });
   });
 </script>

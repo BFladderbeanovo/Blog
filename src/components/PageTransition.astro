@@ -1,4 +1,4 @@
-﻿---
+---
 ---
 <div id="page-trans-wrap" class="page-trans-wrap" aria-hidden="true">
     <!-- Layer 1: Accent Color (Secondary) -->
@@ -13,32 +13,32 @@
 </div>
 
 <script>
-    const wrapper = document.getElementById('page-trans-wrap');
-    const loaderText = document.getElementById('loader-text');
+    const bryanWrapper = document.getElementById('page-trans-wrap');
+    const bryanLoaderText = document.getElementById('loader-text');
 
     // Random effects list
-    const effects = ['stagger-up', 'stagger-down', 'shutter-y', 'wipe-right'];
+    const bryanEffects = ['stagger-up', 'stagger-down', 'shutter-y', 'wipe-right'];
     
-    function setRandomEffect() {
-        if (!wrapper) return;
-        const effect = effects[Math.floor(Math.random() * effects.length)];
-        wrapper.setAttribute('data-effect', effect);
+    function bryanSetRandomEffect() {
+        if (!bryanWrapper) return;
+        const bryanEffect = bryanEffects[Math.floor(Math.random() * bryanEffects.length)];
+        bryanWrapper.setAttribute('data-effect', bryanEffect);
     }
 
     // 1. Navigation Starts
     document.addEventListener('astro:before-preparation', () => {
         document.documentElement.classList.add('is-navigating');
         
-        if (wrapper) {
-            setRandomEffect();
-            wrapper.style.display = 'flex';
+        if (bryanWrapper) {
+            bryanSetRandomEffect();
+            bryanWrapper.style.display = 'flex';
             // Force reflow
-            void wrapper.offsetWidth; 
-            wrapper.setAttribute('data-state', 'loading');
+            void bryanWrapper.offsetWidth; 
+            bryanWrapper.setAttribute('data-state', 'loading');
             
-            if(loaderText) {
-                const texts = ['LOADING', 'PLEASE WAIT', 'PROCESSING', 'CONNECTING'];
-                loaderText.innerText = texts[Math.floor(Math.random() * texts.length)];
+            if(bryanLoaderText) {
+                const bryanTexts = ['LOADING', 'PLEASE WAIT', 'PROCESSING', 'CONNECTING'];
+                bryanLoaderText.innerText = bryanTexts[Math.floor(Math.random() * bryanTexts.length)];
             }
         }
     });
@@ -50,9 +50,9 @@
          * We need to recreate the state so it covers the screen, 
          * then animate it away.
          */
-        const newWrapper = document.getElementById('page-trans-wrap');
+        const bryanNewWrapper = document.getElementById('page-trans-wrap');
         
-        if (newWrapper) {
+        if (bryanNewWrapper) {
             // Restore the effect class from the previous state? 
             // Actually, we can just pick a specific 'exit' or keep it simple.
             // But visually continuity requires we know what the 'enter' was.
@@ -69,20 +69,20 @@
             // For now, let's keep it simple: 
             // Whatever the new DOM has, we init it as 'loading' (full cover), then 'loaded' (exit).
             // We'll fix the effect to 'stagger-up' for exit to be safe and clean.
-            newWrapper.setAttribute('data-effect', 'stagger-up');
+            bryanNewWrapper.setAttribute('data-effect', 'stagger-up');
             
-            newWrapper.style.display = 'flex';
-            newWrapper.setAttribute('data-state', 'loading');
+            bryanNewWrapper.style.display = 'flex';
+            bryanNewWrapper.setAttribute('data-state', 'loading');
             
-            void newWrapper.offsetWidth;
+            void bryanNewWrapper.offsetWidth;
             
             requestAnimationFrame(() => {
-                 newWrapper.setAttribute('data-state', 'loaded');
+                 bryanNewWrapper.setAttribute('data-state', 'loaded');
             });
             
             setTimeout(() => {
-                newWrapper.style.display = 'none';
-                newWrapper.removeAttribute('data-state');
+                bryanNewWrapper.style.display = 'none';
+                bryanNewWrapper.removeAttribute('data-state');
                 document.documentElement.classList.remove('is-navigating');
             }, 1000); 
         } else {

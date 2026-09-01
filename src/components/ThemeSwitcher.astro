@@ -8,18 +8,18 @@
 <script is:inline>
     // Wrapper to keep global scope clean and handle View Transitions
     document.addEventListener('astro:page-load', () => {
-        const themeToggle = document.getElementById('theme-toggle');
+        const bryanThemeToggle = document.getElementById('theme-toggle');
         
         // Helper: Logic to get current theme
-        const getTheme = () => {
-            const stored = localStorage.getItem('site-theme');
-            if (stored) return stored;
+        const bryanGetTheme = () => {
+            const bryanStored = localStorage.getItem('site-theme');
+            if (bryanStored) return bryanStored;
             return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'nord' : 'modern';
         };
 
-        const setTheme = (theme) => {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('site-theme', theme);
+        const bryanSetTheme = (bryanTheme) => {
+            document.documentElement.setAttribute('data-theme', bryanTheme);
+            localStorage.setItem('site-theme', bryanTheme);
         };
 
         // Enable smooth transitions after initial paint (prevents FOUC on reload)
@@ -28,44 +28,44 @@
         }, 100);
 
         // --- Event Listener Implementation ---
-        const handleToggle = (e) => {
-            const current = getTheme();
-            const next = current === 'modern' ? 'nord' : 'modern';
+        const bryanHandleToggle = (bryanE) => {
+            const bryanCurrent = bryanGetTheme();
+            const bryanNext = bryanCurrent === 'modern' ? 'nord' : 'modern';
             
             // Advanced View Transition API (Chrome/Edge/Arc)
             // @ts-ignore
             if (!document.startViewTransition) {
-                setTheme(next);
+                bryanSetTheme(bryanNext);
                 return;
             }
             
             // @ts-ignore
-            const transition = document.startViewTransition(() => {
-                setTheme(next);
+            const bryanTransition = document.startViewTransition(() => {
+                bryanSetTheme(bryanNext);
             });
 
             // Circular Reveal Effect
-            const x = e.clientX;
-            const y = e.clientY;
-            const endRadius = Math.hypot(
-                Math.max(x, innerWidth - x),
-                Math.max(y, innerHeight - y)
+            const bryanX = bryanE.clientX;
+            const bryanY = bryanE.clientY;
+            const bryanEndRadius = Math.hypot(
+                Math.max(bryanX, innerWidth - bryanX),
+                Math.max(bryanY, innerHeight - bryanY)
             );
 
-            transition.ready.then(() => {
-                const clipPath = [
-                    `circle(0px at ${x}px ${y}px)`,
-                    `circle(${endRadius}px at ${x}px ${y}px)`,
+            bryanTransition.ready.then(() => {
+                const bryanClipPath = [
+                    `circle(0px at ${bryanX}px ${bryanY}px)`,
+                    `circle(${bryanEndRadius}px at ${bryanX}px ${bryanY}px)`,
                 ];
                 
                 document.documentElement.animate(
                     {
-                        clipPath: current === 'modern' ? clipPath : [...clipPath].reverse(),
+                        clipPath: bryanCurrent === 'modern' ? bryanClipPath : [...bryanClipPath].reverse(),
                     },
                     {
                         duration: 500,
                         easing: 'ease-in-out',
-                        pseudoElement: current === 'modern' 
+                        pseudoElement: bryanCurrent === 'modern' 
                             ? '::view-transition-new(root)' 
                             : '::view-transition-old(root)',
                     }
@@ -73,14 +73,14 @@
             });
         };
 
-        if (themeToggle) {
-            themeToggle.onclick = handleToggle; // Use onclick to replace any existing listener clean
+        if (bryanThemeToggle) {
+            bryanThemeToggle.onclick = bryanHandleToggle; // Use onclick to replace any existing listener clean
         }
 
         // Optional: Listen for system changes
-        window.matchMedia('(prefers-color-scheme: dark)').onchange = (e) => {
+        window.matchMedia('(prefers-color-scheme: dark)').onchange = (bryanE) => {
             if (!localStorage.getItem('site-theme')) {
-                setTheme(e.matches ? 'nord' : 'modern');
+                bryanSetTheme(bryanE.matches ? 'nord' : 'modern');
             }
         };
     });
