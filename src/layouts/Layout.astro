@@ -1,19 +1,19 @@
 ---
-import { ClientRouter } from 'astro:transitions';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import PageTransition from '../components/PageTransition.astro';
-import ThemeSwitcher from '../components/ThemeSwitcher.astro';
-import BackgroundParticles from '../components/BackgroundParticles.astro';
+import { bryanClientRouter } from 'astro:transitions';
+import bryanHeader from '../components/Header.astro';
+import bryanFooter from '../components/Footer.astro';
+import bryanPageTransition from '../components/PageTransition.astro';
+import bryanThemeSwitcher from '../components/ThemeSwitcher.astro';
+import bryanBackgroundParticles from '../components/BackgroundParticles.astro';
 import '../styles/tokens.css';
 import '../styles/global.css';
 
-interface Props {
-  title?: string;
-  description?: string;
+interface bryanProps {
+  bryanTitle?: string;
+  bryanDescription?: string;
 }
 
-const { title = "BF's Digital Garden", description = 'Notes, experiments, and field reports.' } = Astro.props;
+const { bryanTitle = "BF's Digital Garden", bryanDescription = 'Notes, experiments, and field reports.' } = Astro.props;
 ---
 
 <!doctype html>
@@ -23,26 +23,26 @@ const { title = "BF's Digital Garden", description = 'Notes, experiments, and fi
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
+    <meta name="description" content={bryanDescription} />
 
     <script is:inline>
       (function () {
-        const getTheme = () => {
-          const stored = localStorage.getItem('site-theme');
-          if (stored === 'modern' || stored === 'nord') return stored;
+        const bryanGetTheme = () => {
+          const bryanStored = localStorage.getItem('site-theme');
+          if (bryanStored === 'modern' || bryanStored === 'nord') return bryanStored;
           return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'nord' : 'modern';
         };
 
-        const applyTheme = () => {
-          document.documentElement.setAttribute('data-theme', getTheme());
+        const bryanApplyTheme = () => {
+          document.documentElement.setAttribute('data-theme', bryanGetTheme());
         };
 
-        applyTheme();
-        document.addEventListener('astro:after-swap', applyTheme);
+        bryanApplyTheme();
+        document.addEventListener('astro:after-swap', bryanApplyTheme);
       })();
     </script>
 
-    <ClientRouter />
+    <bryanClientRouter />
 
     <link
       rel="stylesheet"
@@ -53,24 +53,24 @@ const { title = "BF's Digital Garden", description = 'Notes, experiments, and fi
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={bryanTitle} />
+    <meta property="og:description" content={bryanDescription} />
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={Astro.url} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
+    <meta property="twitter:title" content={bryanTitle} />
+    <meta property="twitter:description" content={bryanDescription} />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
-    <title>{title}</title>
+    <title>{bryanTitle}</title>
   </head>
   <body>
-    <BackgroundParticles />
-    <PageTransition />
-    <Header />
+    <bryanBackgroundParticles />
+    <bryanPageTransition />
+    <bryanHeader />
     <div id="scroll-container" class="scroll-container">
       <slot />
     </div>
-    <ThemeSwitcher />
-    <Footer />
+    <bryanThemeSwitcher />
+    <bryanFooter />
   </body>
 </html>

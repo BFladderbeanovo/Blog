@@ -2,16 +2,16 @@
 import { getCollection } from 'astro:content';
 
 export async function GET({}) {
-	const posts = await getCollection('blog');
-	const body = JSON.stringify(
-		posts.map((post) => ({
-			title: post.data.title,
-			description: post.data.description,
-			slug: post.slug,
-            tags: post.data.tags
+	const bryanPosts = await getCollection('blog');
+	const bryanBody = JSON.stringify(
+		bryanPosts.map((bryanPost) => ({
+			title: bryanPost.data.title,
+			description: bryanPost.data.description,
+			slug: bryanPost.slug,
+            tags: bryanPost.data.tags
 		}))
 	);
-	return new Response(body, {
+	return new Response(bryanBody, {
 		headers: {
 			'Content-Type': 'application/json'
 		}
